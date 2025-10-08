@@ -281,23 +281,22 @@
 //         }
 //     },
 
-//     getCurrentWOTSAddress: async (account?) => {
-//         const { wallet, activeAccount } = get()
+//     getCurrentWOTSAddress: async (account?: Account) => {
+//         const { wallet, activeAccount } = useWalletStore.getState()
 //         if (!wallet) throw new Error('No wallet loaded')
-        
 //         const targetAccount = account || activeAccount
 //         if (!targetAccount) throw new Error('No account specified')
-
 //         try {
 //             // Create WOTS wallet without incrementing index
 //             const wots = await wallet.getWOTSWallet(targetAccount)
 //             const address = wots.getAddress()
-            
 //             if (!address) return null
-//             return Buffer.from(address).toString('hex')
+//             // Address hex, 40 chars, prefixed with 0x
+//             const addressHex = Buffer.from(address).toString('hex').slice(0, 40)
+//             return '0x' + addressHex
 //         } catch (error) {
 //             console.error('Error getting WOTS address:', error)
 //             return null
 //         }
 //     }
-// })) 
+// }))) 

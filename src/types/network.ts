@@ -52,39 +52,55 @@ export interface TagActivationResponse {
  */
 export interface NetworkService {
     apiUrl: string;
-    /**
-     * Resolves a tag to its current WOTS address and balance
-     * @param tag The tag to resolve
-     */
     resolveTag(tag: string): Promise<TagResolveResponse>;
-
-    /**
-     * Pushes a transaction to the network
-     * @param transaction Serialized transaction
-     * @param recipients Optional number of recipients
-     */
     pushTransaction(transaction: string, recipients?: number): Promise<TransactionResponse>;
-
-    /**
-     * Activates a tag with its first WOTS address
-     * @param wotsAddress The WOTS address to activate
-     */
     activateTag(wotsAddress: string): Promise<TagActivationResponse>;
-
-    /**
-     * Gets the current network status
-     */
     getNetworkStatus(): Promise<{
         height: number;
         nodes: NetworkNode[];
     }>;
-
-    /**
-     * Gets a tag's WOTS address balance
-     * @param tag The tag to get the balance of
-     */
     getBalance(tag: string): Promise<string>;
-} 
+
+    // Nuove funzioni MochimoApiClient
+    getAccountBalance(address: string): Promise<any>;
+    getMempoolTransactions(): Promise<any>;
+    getMempoolTransaction(txHash: string): Promise<any>;
+    waitForTransaction(transactionHash: string, timeout?: number, interval?: number): Promise<any>;
+    getNetworkOptions(): Promise<any>;
+    getBlock(identifier: any): Promise<{ block: any }>;
+    getBlockTransaction(blockIdentifier: any, transactionHash: string): Promise<any>;
+    submit(signedTransaction: string): Promise<any>;
+    derive(publicKey: string, tag: string): Promise<any>;
+    preprocess(operations: any[], metadata: any): Promise<any>;
+    metadata(options: any, publicKeys: any[]): Promise<any>;
+    payloads(operations: any[], metadata: any, publicKeys: any[]): Promise<any>;
+    combine(unsignedTransaction: string, signatures: any[]): Promise<any>;
+    parse(transaction: string, signed: boolean): Promise<any>;
+    searchTransactionsByAddress(address: string, options?: {
+        limit?: number;
+        offset?: number;
+        max_block?: number;
+        status?: string;
+    }): Promise<any>;
+    searchTransactionsByBlock(blockIdentifier: any, options?: {
+        limit?: number;
+        offset?: number;
+        status?: string;
+    }): Promise<any>;
+    searchTransactionsByTxId(transactionHash: string, options?: {
+        max_block?: number;
+        status?: string;
+    }): Promise<any>;
+    getEventsBlocks(options?: {
+        limit?: number;
+        offset?: number;
+    }): Promise<any>;
+    getStatsRichlist(options?: {
+        ascending?: boolean;
+        offset?: number;
+        limit?: number;
+    }): Promise<any>;
+}
 export interface NetworkState {
     blockHeight: number;
     isConnected: boolean;

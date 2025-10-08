@@ -100,4 +100,16 @@ export class LocalStorage implements Storage {
         );
         keys.forEach(key => localStorage.removeItem(key));
     }
+
+    async setItem(key: string, value: string): Promise<void> {
+        localStorage.setItem(this.getKey(key), value);
+    }
+
+    async getItem(key: string): Promise<string | null> {
+        return localStorage.getItem(this.getKey(key));
+    }
+
+    async removeItem(key: string): Promise<void> {
+        localStorage.removeItem(this.getKey(key));
+    }
 } 

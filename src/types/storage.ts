@@ -17,6 +17,11 @@ export interface Storage {
     saveHighestIndex(index: number): Promise<void>;
     loadHighestIndex(): Promise<number>;
     
+    // Generic storage methods for app data
+    setItem(key: string, value: string): Promise<void>;
+    getItem(key: string): Promise<string | null>;
+    removeItem(key: string): Promise<void>;
+    
     clear(): Promise<void>;
 }
 

@@ -103,6 +103,21 @@ export class ExtensionStorage implements Storage {
             await this.storage.remove(keys);
         }
     }
+
+    async setItem(key: string, value: string): Promise<void> {
+        await this.storage.set({
+            [this.getKey(key)]: value
+        });
+    }
+
+    async getItem(key: string): Promise<string | null> {
+        const result = await this.storage.get(this.getKey(key));
+        return result[this.getKey(key)] || null;
+    }
+
+    async removeItem(key: string): Promise<void> {
+        await this.storage.remove(this.getKey(key));
+    }
 } 
 
 function getStorageArea(): StorageArea {
